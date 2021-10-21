@@ -5,6 +5,7 @@ import dev.millzyg.SynthWave.command.CommandContext;
 import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
 import dev.millzyg.SynthWave.command.commands.PingCommand;
+import dev.millzyg.SynthWave.command.commands.music.JoinCommand;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -23,6 +24,8 @@ public class CommandManager {
     public static final List<ICommand> commands = new ArrayList<>();
 
     public CommandManager() {
+        addCommand(new JoinCommand());
+
         addCommand(new PingCommand());
     }
 
