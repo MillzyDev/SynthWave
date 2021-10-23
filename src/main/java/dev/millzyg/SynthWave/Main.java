@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dev.millzyg.MillzyLogger.Logger;
 import dev.millzyg.SynthWave.listeners.OnGuildMessageRecieved;
 import dev.millzyg.SynthWave.listeners.OnReady;
+import dev.millzyg.SynthWave.listeners.VoiceChannelTimeout;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -52,7 +53,8 @@ public class Main {
                 .createDefault(token)
                 .addEventListeners(
                         new OnGuildMessageRecieved(),
-                        new OnReady()
+                        new OnReady(),
+                        new VoiceChannelTimeout()
                 )
                 .build()
         ;
