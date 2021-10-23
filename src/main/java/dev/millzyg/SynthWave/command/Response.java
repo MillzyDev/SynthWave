@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Response {
     private User author;
-    private String title, message, footer;
+    private String title, message, footer, thumbnail;
     private Color colour;
 
     public Response setAuthor(User author) { this.author = author; return this; }
@@ -21,14 +21,17 @@ public class Response {
 
     public Response setColour(Color colour) { this.colour = colour; return this; }
 
+    public Response setThumbnail(String thumbnail) { this.thumbnail = thumbnail; return this;}
+
     public void sendResponse(TextChannel channel) {
         EmbedBuilder eb = new EmbedBuilder();
 
-        if (author != null) eb.setAuthor(author.getName(), author.getAvatarUrl());
+        if (author != null) eb.setAuthor(author.getName(), null, author.getAvatarUrl());
         if (title != null) eb.setTitle(title);
         if (message != null) eb.setDescription(message);
         if (footer != null) eb.setFooter(footer);
         if (colour != null) eb.setColor(colour);
+        if (thumbnail != null) eb.setThumbnail(thumbnail);
 
         channel.sendMessageEmbeds(eb.build()).queue();
     }
