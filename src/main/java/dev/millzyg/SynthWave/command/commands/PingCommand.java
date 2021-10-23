@@ -16,10 +16,8 @@ public class PingCommand implements ICommand {
 
         EmbedBuilder eb = new EmbedBuilder();
 
-        eb.setTitle("\uD83C\uDFD3 Pong!");
         eb.setAuthor(ctx.getAuthor().getAsTag(), null, ctx.getAuthor().getAvatarUrl());
         eb.setColor(Color.orange);
-        eb.setFooter("Command Message ID: " + ctx.getMessage().getId());
 
         jda.getRestPing().queue( (time) -> ctx.getChannel()
                 .sendMessageEmbeds(eb.setDescription("⏳ API Latency: `" + time + "ms`\n \uD83D\uDC93 WS Heartbeat: `"+ jda.getGatewayPing() + "ms`").build()).queue()
