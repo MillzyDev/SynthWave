@@ -9,7 +9,6 @@ import dev.millzyg.SynthWave.command.CommandContext;
 import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
 import dev.millzyg.SynthWave.music.PlayerManager;
-import net.dv8tion.jda.api.entities.TextChannel;
 
 import javax.naming.AuthenticationException;
 import java.awt.*;
@@ -18,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayCommand implements ICommand {
     private final YouTube youTube;
@@ -43,8 +43,6 @@ public class PlayCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws IOException, AuthenticationException {
 
-        TextChannel channel = ctx.getChannel();
-
         String input = String.join(" ", ctx.getArgs());
 
         if (!isUrl(input)) {
@@ -65,7 +63,7 @@ public class PlayCommand implements ICommand {
             PlayerManager manager = PlayerManager.getInstance();
 
             manager.loadAndPlay(ctx.getMessage(), input);
-            manager.getGuildMusicManager(ctx.getGuild(), ctx.getChannel()).player.getPlayingTrack();
+            manager.getGuildMusicManager(ctx.getGuild()).player.getPlayingTrack();
 
     }
 

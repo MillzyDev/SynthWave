@@ -6,6 +6,7 @@ import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
 import dev.millzyg.SynthWave.command.commands.PingCommand;
 import dev.millzyg.SynthWave.command.commands.music.*;
+import dev.millzyg.SynthWave.music.DiscordMusicInterface;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -95,6 +96,11 @@ public class CommandManager {
             CommandContext ctx = new CommandContext(event, args);
 
             Logger.info(cmd.getName().toUpperCase() + " Command was executed by " + message.getAuthor().getAsTag());
+
+            DiscordMusicInterface dmi = DiscordMusicInterface.getInstance();
+            dmi.setContext(ctx);
+            dmi.setJDA(ctx.getJDA());
+
             cmd.handle(ctx);
         }
 

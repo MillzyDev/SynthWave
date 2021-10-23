@@ -30,12 +30,12 @@ public class PlayerManager {
         AudioSourceManagers.registerLocalSource(playerManager);
     }
 
-    public synchronized GuildMusicManager getGuildMusicManager(Guild guild, TextChannel channel) {
+    public synchronized GuildMusicManager getGuildMusicManager(Guild guild) {
         long guildId = guild.getIdLong();
         GuildMusicManager musicManager = musicManagers.get(guildId);
 
         if (musicManager == null) {
-            musicManager = new GuildMusicManager(playerManager, channel);
+            musicManager = new GuildMusicManager(playerManager);
             musicManagers.put(guildId, musicManager);
         }
 
@@ -46,7 +46,7 @@ public class PlayerManager {
 
     public void loadAndPlay(Message message, String trackUrl) {
         TextChannel channel = message.getTextChannel();
-        GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild(), channel);
+        GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
 
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override

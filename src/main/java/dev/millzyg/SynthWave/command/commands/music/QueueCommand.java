@@ -25,7 +25,7 @@ public class QueueCommand implements ICommand {
     public void handle(CommandContext ctx) throws IOException, AuthenticationException {
         TextChannel channel = ctx.getChannel();
         PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild(), ctx.getChannel());
+        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         BlockingQueue<AudioTrack> queue = musicManager.scheduler.getQueue();
 
         if (queue.isEmpty()) {

@@ -1,5 +1,6 @@
 package dev.millzyg.SynthWave.command.commands.music;
 
+import dev.millzyg.MillzyLogger.Logger;
 import dev.millzyg.SynthWave.command.CommandContext;
 import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
@@ -16,9 +17,11 @@ public class PauseCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws IOException, AuthenticationException {
         PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager guildMusicManager = playerManager.getGuildMusicManager(ctx.getGuild(), ctx.getChannel());
+        GuildMusicManager guildMusicManager = playerManager.getGuildMusicManager(ctx.getGuild());
 
         guildMusicManager.player.setPaused(true);
+
+        Logger.info("Paused the player");
 
         new Response()
                 .setColour(Color.YELLOW)

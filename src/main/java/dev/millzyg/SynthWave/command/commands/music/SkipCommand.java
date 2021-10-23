@@ -1,6 +1,7 @@
 package dev.millzyg.SynthWave.command.commands.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import dev.millzyg.MillzyLogger.Logger;
 import dev.millzyg.SynthWave.command.CommandContext;
 import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
@@ -18,7 +19,7 @@ public class SkipCommand implements ICommand {
     public void handle(CommandContext ctx) throws IOException, AuthenticationException {
         TextChannel channel = ctx.getChannel();
         PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager guildMusicManager = playerManager.getGuildMusicManager(ctx.getGuild(), ctx.getChannel());
+        GuildMusicManager guildMusicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         TrackScheduler scheduler = guildMusicManager.scheduler;
         AudioPlayer player = guildMusicManager.player;
 
@@ -31,12 +32,14 @@ public class SkipCommand implements ICommand {
             return;
         }
 
-        scheduler.nextTrack();
+        Logger.info("Skipped the current track");
 
         new Response()
                 .setColour(Color.YELLOW)
                 .setMessage("Skipped to the next song \uD83D\uDE0A")
                 .sendResponse(channel);
+
+        scheduler.nextTrack();
     }
 
     @Override

@@ -22,8 +22,7 @@ public class JoinCommand implements ICommand {
         AudioManager audioManager = ctx.getGuild().getAudioManager();
 
         Response response = new Response()
-                .setAuthor(ctx.getAuthor())
-                .setFooter("Command Message ID: " + ctx.getMessage().getId());
+                .setAuthor(ctx.getAuthor());
 
         if (audioManager.isConnected()) {
             response
@@ -36,6 +35,7 @@ public class JoinCommand implements ICommand {
 
         GuildVoiceState memberVoiceState = ctx.getMember().getVoiceState();
 
+        assert memberVoiceState != null;
         if (!memberVoiceState.inVoiceChannel()) {
             response
                     .setMessage("You need to be in a voice channel to use that command")
@@ -47,6 +47,7 @@ public class JoinCommand implements ICommand {
         VoiceChannel voiceChannel = memberVoiceState.getChannel();
         Member selfMember = ctx.getGuild().getSelfMember();
 
+        assert voiceChannel != null;
         if (!selfMember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
             response
                     .setMessage("I don't have permission to join that voice channel")

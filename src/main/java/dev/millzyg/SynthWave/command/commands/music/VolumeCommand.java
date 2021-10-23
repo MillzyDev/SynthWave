@@ -20,12 +20,16 @@ public class VolumeCommand implements ICommand {
         try {
             int volume = Integer.parseInt(ctx.getArgs().get(0));
 
-            playerManager.getGuildMusicManager(ctx.getGuild(), ctx.getChannel()).player.setVolume(volume);
+            playerManager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
+
+            Logger.info("Changed volume to" + volume);
 
             new Response()
                     .setMessage(String.format("Changed volume to **%s**", volume))
                     .setColour(Color.ORANGE)
                     .sendResponse(ctx.getChannel());
+
+
         } catch (NumberFormatException e) {
             new Response()
                     .setMessage("New volume must be a **number**")

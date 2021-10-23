@@ -34,6 +34,7 @@ public class LeaveCommand implements ICommand {
 
         VoiceChannel voiceChannel = audioManager.getConnectedChannel();
 
+        assert voiceChannel != null;
         if (!voiceChannel.getMembers().contains(ctx.getMember())) {
             response
                     .setMessage("You must be in the same channel as me to use that command")
