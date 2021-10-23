@@ -4,6 +4,7 @@ import dev.millzyg.MillzyLogger.Logger;
 import dev.millzyg.SynthWave.command.CommandContext;
 import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
+import dev.millzyg.SynthWave.command.commands.HelpCommand;
 import dev.millzyg.SynthWave.command.commands.PingCommand;
 import dev.millzyg.SynthWave.command.commands.music.*;
 import dev.millzyg.SynthWave.music.DiscordMusicInterface;
@@ -35,6 +36,7 @@ public class CommandManager {
         addCommand(new VolumeCommand());
 
         // general commands
+        addCommand(new HelpCommand());
         addCommand(new PingCommand());
     }
 
