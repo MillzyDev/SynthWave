@@ -22,7 +22,7 @@ public class VolumeCommand implements ICommand {
 
             playerManager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
 
-            Logger.info("Changed volume to" + volume);
+            Logger.info("Changed volume to " + volume);
 
             new Response()
                     .setMessage(String.format("Changed volume to **%s**", volume))
