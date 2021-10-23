@@ -5,10 +5,8 @@ import dev.millzyg.SynthWave.command.CommandContext;
 import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
 import dev.millzyg.SynthWave.command.commands.PingCommand;
-import dev.millzyg.SynthWave.command.commands.music.JoinCommand;
+import dev.millzyg.SynthWave.command.commands.music.*;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import javax.annotation.Nullable;
@@ -24,8 +22,18 @@ public class CommandManager {
     public static final List<ICommand> commands = new ArrayList<>();
 
     public CommandManager() {
+        // music commands
+        addCommand(new ClearCommand());
         addCommand(new JoinCommand());
+        addCommand(new LeaveCommand());
+        addCommand(new PauseCommand());
+        addCommand(new PlayCommand());
+        addCommand(new QueueCommand());
+        addCommand(new SkipCommand());
+        addCommand(new UnpauseCommand());
+        addCommand(new VolumeCommand());
 
+        // general commands
         addCommand(new PingCommand());
     }
 
@@ -86,8 +94,8 @@ public class CommandManager {
 
             CommandContext ctx = new CommandContext(event, args);
 
-            cmd.handle(ctx);
             Logger.info(cmd.getName().toUpperCase() + " Command was executed by " + message.getAuthor().getAsTag());
+            cmd.handle(ctx);
         }
 
     }
