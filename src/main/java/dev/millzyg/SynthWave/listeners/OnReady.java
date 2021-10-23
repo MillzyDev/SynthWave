@@ -19,7 +19,7 @@ public class OnReady extends ListenerAdapter {
 
         Logger.info("Logged in as " + self.getAsTag());
 
-        Activity activity = Activity.playing("SynthWave by Millzy");
+        Activity activity = Activity.playing("SynthWave");
         jda.getPresence().setActivity(activity);
 
     }
