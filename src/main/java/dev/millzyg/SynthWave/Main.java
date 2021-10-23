@@ -8,12 +8,10 @@ import dev.millzyg.SynthWave.listeners.OnReady;
 import dev.millzyg.SynthWave.listeners.VoiceChannelTimeout;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import org.apache.commons.io.IOUtils;
 
 import javax.security.auth.login.LoginException;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -21,31 +19,18 @@ public class Main {
     public JDA jda;
     public static Config config;
 
-    private Main(String[] args) throws LoginException {
-        // load config from resources
-        InputStreamReader isReader =
-                new InputStreamReader(
-                        Objects.requireNonNull(this.getClass().getResourceAsStream("/config.json"))
-                );
-        BufferedReader reader = new BufferedReader(isReader);
-        // serialise reader to Config object
-        Gson gson = new Gson();
-        String jsonStr = reader.lines().collect(Collectors.joining());
-        config = gson.fromJson(jsonStr, Config.class);
+    private Main(String[] args) throws LoginException, IOException {
+        // load config
+        try (FileInputStream inputStream = new FileInputStream("config.json")) {
+            Gson gson = new Gson();
+            String jsonStr = IOUtils.toString(inputStream);
+            config = gson.fromJson(jsonStr, Config.class);
+        }
 
         Logger.info("Prefix is set to \"" + config.getPrefix() + "\"");
 
-        // check if new token was provided
-        if (args.length > 0 && args[0].length() > 0) {
-            Logger.info("Attempting to login with the token: " + args[0]);
-            Init(args[0]);
-        } else if (config.getDiscordToken().length() > 0) { // login with token in config if no args are provided
-            Logger.info("Attempting to login with the token: " + config.getDiscordToken());
-            Init(config.getDiscordToken());
-        } else { // if there is no token provided at all, the process will throw an exception
-            Logger.severe("Unable to fetch token or no token was provided.");
-            throw new LoginException();
-        }
+        Logger.info("Attempting login with the token " + config.getDiscordToken());
+        Init(config.getDiscordToken());
     }
 
     private void Init(String token) throws LoginException {
@@ -60,7 +45,14 @@ public class Main {
         ;
     }
 
-    public static void main(String[] args) throws LoginException {
-        new Main(args);
+    public static void main(String[] args) throws LoginException, IOException {
+        try {
+            new Main(args);
+        } catch (FileNotFoundException e) {
+            Logger.severe(e.getMessage());
+            Logger.info("Refreshing config");
+            ResourceUtil.ExportResource("/config.json", "config.json");
+            Logger.info("Refreshed config... please edit config, and restart");
+        }
     }
 }

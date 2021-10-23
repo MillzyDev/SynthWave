@@ -13,6 +13,9 @@ public class Config {
     public String getDiscordToken(){
         return this.discordToken;
     }
+
     public String getYouTubeKey(){ return this.youTubeKey; }
+
     public String getPrefix() { return this.prefix; }
+
 }
