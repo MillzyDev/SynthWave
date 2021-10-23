@@ -1,5 +1,6 @@
 package dev.millzyg.SynthWave.command.commands.music;
 
+import dev.millzyg.MillzyLogger.Logger;
 import dev.millzyg.SynthWave.command.CommandContext;
 import dev.millzyg.SynthWave.command.ICommand;
 import dev.millzyg.SynthWave.command.Response;
@@ -37,8 +38,7 @@ public class JoinCommand implements ICommand {
 
         if (!memberVoiceState.inVoiceChannel()) {
             response
-                    .setTitle("Unable to join voice channel")
-                    .setMessage("SynthWave requires you to be in a channel in order to join said channel...")
+                    .setMessage("You need to be in a voice channel to use that command")
                     .setColour(Color.RED);
             response.sendResponse(channel);
             return;
@@ -49,14 +49,18 @@ public class JoinCommand implements ICommand {
 
         if (!selfMember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
             response
-                    .setTitle("Unable to join voice channel")
-                    .setMessage("SynthWave does not have permission to join that voice channel...")
+                    .setMessage("I don't have permission to join that voice channel")
                     .setColour(Color.RED);
             response.sendResponse(channel);
             return;
         }
 
         audioManager.openAudioConnection(voiceChannel);
+        new Response()
+                .setColour(Color.ORANGE)
+                .setMessage("Joined your voice channel \uD83D\uDE0A")
+                .sendResponse(ctx.getChannel());
+        Logger.info("Connected to voice channel: " + voiceChannel.getName());
     }
 
     @Override
