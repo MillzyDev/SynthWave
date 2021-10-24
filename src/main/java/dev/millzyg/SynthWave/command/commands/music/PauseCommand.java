@@ -38,10 +38,4 @@ public class PauseCommand implements ICommand {
     public String getDescription() {
         return "Pauses current track";
     }
-
-    @Override
-    public List<String> getAliases() {
-        String[] aliases = {"p"};
-        return Arrays.asList(aliases);
-    }
 }

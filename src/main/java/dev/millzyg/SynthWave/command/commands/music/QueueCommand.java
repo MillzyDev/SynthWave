@@ -26,7 +26,7 @@ public class QueueCommand implements ICommand {
         TextChannel channel = ctx.getChannel();
         PlayerManager playerManager = PlayerManager.getInstance();
         GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        BlockingQueue<AudioTrack> queue = musicManager.scheduler.getQueue();
+        ArrayList<AudioTrack> queue = musicManager.scheduler.getQueue();
 
         if (queue.isEmpty()) {
             new Response()

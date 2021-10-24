@@ -20,6 +20,7 @@ public class ClearCommand implements ICommand {
         Logger.info("Cleared the queue");
 
         guildMusicManager.scheduler.getQueue().clear();
+        guildMusicManager.scheduler.selectedIndex = 1;
         guildMusicManager.player.stopTrack();
         guildMusicManager.player.setPaused(false);
 
